@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
 use Orchid\Filters\Types\WhereDateStartEnd;
@@ -66,4 +67,8 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    public function electiveSubjects(): BelongsToMany {
+        return $this->belongsToMany(ElectiveSubject::class, 'elective_subject_user');
+    }
 }
