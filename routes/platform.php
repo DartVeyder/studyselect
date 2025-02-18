@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -32,8 +33,12 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/main', ElectiveSubjectListScreen::class)
     ->name('platform.main');
+
+//ElectiveSubject
+Route::screen('/elective-subject', ElectiveSubjectListScreen::class)
+    ->name('platform.elective-subject');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
