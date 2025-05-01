@@ -35,7 +35,7 @@ class UserEditScreen extends Screen
      */
     public function query(User $user): iterable
     {
-        $user->load(['roles']);
+        $user->load(['roles', 'detali']);
 
         return [
             'user'       => $user,

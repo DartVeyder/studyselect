@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
+use App\Orchid\Screens\ElectiveSubject\SelectSubjectListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -12,12 +13,15 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
-use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\Student\StudentListScreen;
+use App\Orchid\Screens\Student\StudentSheetListScreen;
+use App\Orchid\Screens\Student\StudentSpecialtyListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Services\GoogleSheet\StudentsSheet;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -37,8 +41,15 @@ Route::screen('/main', ElectiveSubjectListScreen::class)
     ->name('platform.main');
 
 //ElectiveSubject
-Route::screen('/elective-subject', ElectiveSubjectListScreen::class)
+Route::screen('/elective-subject/{id}', ElectiveSubjectListScreen::class)
     ->name('platform.elective-subject');
+
+Route::screen('/students/google-sheet',StudentSheetListScreen::class)
+    ->name('platform.students.google-sheet');
+
+//ElectiveSubject
+Route::screen('/select-subject',StudentSpecialtyListScreen::class)
+    ->name('platform.select-subject');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
@@ -105,5 +116,12 @@ Route::screen('/examples/layouts', ExampleLayoutsScreen::class)->name('platform.
 Route::screen('/examples/grid', ExampleGridScreen::class)->name('platform.example.grid');
 Route::screen('/examples/charts', ExampleChartsScreen::class)->name('platform.example.charts');
 Route::screen('/examples/cards', ExampleCardsScreen::class)->name('platform.example.cards');
+
+Route::get('/sheet', function (StudentsSheet $sheets) {
+
+    $students = $sheets->getStudentByEmail('dmytro.medvid@dspu.edu.ua');
+    dd($students);
+    return response()->json($data);
+});
 
 //Route::screen('idea', Idea::class, 'platform.screens.idea');

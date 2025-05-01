@@ -34,6 +34,13 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
+            Menu::make("Студенти")
+                ->list([
+                    Menu::make('Переглянути в google таблиці')
+                        ->route('platform.students.google-sheet')
+                ]),
+            Menu::make('Вибір дисциплін (здобувач)')
+                ->route('platform.select-subject')
 //            Menu::make('Get Started')
 //                ->icon('bs.book')
 //                ->title('Navigation')
