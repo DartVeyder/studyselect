@@ -30,7 +30,7 @@ class ElectiveSubjectPostListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'ElectiveSubjectPostListScreen';
+        return 'Виберіть на які вибіркові дисципліни і поставте пріоритети';
     }
 
     /**

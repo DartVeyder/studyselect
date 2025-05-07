@@ -2,8 +2,12 @@
 
 namespace App\Orchid\Layouts\ElectiveSubject;
 
+use App\Models\ElectiveSubjectPost;
 use App\Models\ElectiveSubjectPostUserSpecialty;
+use App\Models\User;
 use Illuminate\Support\Facades\Request;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -42,6 +46,17 @@ class ElectiveSubjectPostListLayout extends Table
             }),
             TD::make('active','Active'),
             TD::make('created_at','Date of publication'),
+            TD::make(__('Actions'))
+                ->align(TD::ALIGN_CENTER)
+                ->width('100px')
+                ->render(fn (ElectiveSubjectPost $post) => DropDown::make()
+                    ->icon('bs.three-dots-vertical')
+                    ->list([
+
+                        Link::make(__('Edit'))
+                            ->route('platform.specialty.elective-subject-posts.elective-subject.edit', ['id' => Request::route('id'),'postId' => $post->id])
+                            ->icon('bs.pencil'),
+                    ])),
         ];
     }
 }

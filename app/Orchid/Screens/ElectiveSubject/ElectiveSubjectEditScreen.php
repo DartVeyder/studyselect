@@ -2,22 +2,17 @@
 
 namespace App\Orchid\Screens\ElectiveSubject;
 
-use App\Models\ElectiveSubject;
-use App\Models\ElectiveSubjectPost;
 use App\Models\ElectiveSubjectPostUserSpecialty;
 use App\Models\ElectiveSubjectUserSpecialty;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Actions\Link;
-use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 use Orchid\Support\Facades\Toast;
-use function Symfony\Component\String\s;
 
-class ElectiveSubjectListScreen extends Screen
+class ElectiveSubjectEditScreen extends Screen
 {
     public $subjects;
     public $postId;
@@ -32,10 +27,7 @@ class ElectiveSubjectListScreen extends Screen
         $postId = \Illuminate\Support\Facades\Request::route('postId');
         $specialtyId =\Illuminate\Support\Facades\Request::route('id');
 
-        $subjects = ElectiveSubject::orderBy('name', 'asc')->get();
-
-
-        //dd($this->specialtyId);
+        $subjects = ElectiveSubjectUserSpecialty::with('subject')->where(['user_specialty_id' => $specialtyId, 'elective_post_id' => $postId])->get();
         return [
             'subjects'    =>  $subjects ,
             'postId'      => $postId,
@@ -50,16 +42,7 @@ class ElectiveSubjectListScreen extends Screen
      */
     public function name(): ?string
     {
-        $post = ElectiveSubjectPost::find($this->postId);
-        if( $post){
-            return $post->title;
-        }
-        return 'ElectiveSubjectListScreen';
-    }
-
-    public function description(): ?string
-    {
-        return '';
+        return 'Змінити пріоритети у вибіркових дисциплінах';
     }
 
     /**
@@ -72,7 +55,7 @@ class ElectiveSubjectListScreen extends Screen
         return [
             Button::make('Save')
                 ->icon('save')
-                ->method('create'),
+                ->method('save'),
         ];
     }
 
@@ -83,17 +66,14 @@ class ElectiveSubjectListScreen extends Screen
      */
     public function layout(): iterable
     {
-
-
         $fields = [];
         $subjects = $this->subjects;
         $n = 1;
         foreach ($subjects as $key => $subject){
-
             $fields[] =  [
                 Select::make("data[$key][priority]")
                     ->empty('-', 0)
-                    ->value('')
+                    ->value($subject->priority)
                     ->options([
                         '1' => '1',
                         '2' => '2',
@@ -102,27 +82,20 @@ class ElectiveSubjectListScreen extends Screen
                         '5' => '5',
                     ])
                     ->horizontal()
-                    ->title( $n . '. '. $subject->name) ,
-                Input::make("data[$key][elective_subject_id]")
-                    ->value($subject->id)
-                    ->hidden(),
-                Input::make("data[$key][user_specialty_id]")
-                    ->value( $this->specialtyId)
-                    ->hidden(),
-                Input::make("data[$key][elective_post_id]")
-                    ->value( $this->postId)
+                    ->title( $n . '. '. $subject->subject->name) ,
+                Input::make("data[$key][id]")
+                    ->value($subject->id )
                     ->hidden(),
             ];
-          $n++;
+            $n++;
         }
         $fields = array_merge(...$fields);
         return [
             Layout::rows(
                 $fields
-             )
+            )
         ];
     }
-
 
 
     /**
@@ -130,18 +103,18 @@ class ElectiveSubjectListScreen extends Screen
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function create(Request $request)
+    public function save(Request $request)
     {
 
         $data = $request->input('data');
-        $result = ElectiveSubjectUserSpecialty::insert($data);
 
-        if($result){
-            ElectiveSubjectPostUserSpecialty::create(['user_specialty_id'=>$this->specialtyId , 'elective_post_id' => $this->postId]);
+        foreach ($data as $item) {
+            ElectiveSubjectUserSpecialty::where('id', $item['id'])
+                ->update(['priority' => $item['priority']]);
         }
 
         Toast::info('Ваші відповіді успішно записані.');
 
-        return redirect()->route('platform.specialty', $this->specialtyId );
+        return redirect()->back();
     }
 }

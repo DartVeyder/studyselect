@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostListScreen;
@@ -64,6 +65,8 @@ Route::screen('/specialty/{id}',ElectiveSubjectPostListScreen::class)
 Route::screen('/specialty/{id}/{postId}/select-subject', ElectiveSubjectListScreen::class)
     ->name('platform.specialty.elective-subject-posts.elective-subject');
 
+Route::screen('/specialty/{id}/{postId}/edit-subject', ElectiveSubjectEditScreen::class)
+    ->name('platform.specialty.elective-subject-posts.elective-subject.edit');
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')

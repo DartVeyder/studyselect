@@ -12,7 +12,7 @@ class ElectiveSubjectUserSpecialty extends Model
     use AsSource;
 
     protected $guarded = [];
-
+    public $timestamps = false;
     public function subject()
     {
         return $this->belongsTo(ElectiveSubject::class,'elective_subject_id');
