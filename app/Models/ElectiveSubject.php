@@ -9,10 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class ElectiveSubject extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     public function departments(): HasMany
     {
         return $this->hasMany(DepartmentElectiveSubject::class);
+    }
+
+    public function electiveSubjectUserSpecialty()
+    {
+        return $this->hasOne(ElectiveSubjectUserSpecialty::class);
     }
 }

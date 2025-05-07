@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\UserSpecialty;
 use App\Services\GoogleSheet\StudentsSheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -75,11 +76,11 @@ class AuthController extends Controller
              $students = $sheets->getStudentByEmail($socialiteUser->getEmail());
 
              foreach ( $students as $student){
-                 $existingUser = Student::where('user_id', $user->id)->where('group', $student['group'])->first();
+                 $existingUser = UserSpecialty::where('user_id', $user->id)->where('group', $student['group'])->first();
                  if(!$existingUser){
                      $student['user_id'] = $user->id;
                      $student['birth_date'] = Carbon::createFromFormat('d.m.Y', $student['birth_date'])->toDateString();
-                     Student::create($student);
+                     UserSpecialty::create($student);
                  }
 
              }

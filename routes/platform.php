@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostListScreen;
 use App\Orchid\Screens\ElectiveSubject\SelectSubjectListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
@@ -21,6 +23,7 @@ use App\Orchid\Screens\Student\StudentSpecialtyListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Orchid\Screens\User\UserSpecialtyListScreen;
 use App\Services\GoogleSheet\StudentsSheet;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
@@ -41,15 +44,25 @@ Route::screen('/main', ElectiveSubjectListScreen::class)
     ->name('platform.main');
 
 //ElectiveSubject
-Route::screen('/elective-subject/{id}', ElectiveSubjectListScreen::class)
-    ->name('platform.elective-subject');
+//Route::screen('/elective-subject/', ElectiveSubjectListScreen::class)
+//    ->name('platform.elective-subject');
+
+//ElectiveSubject > created
+Route::screen('/elective-subject/create', ElectiveSubjectPostEditScreen::class)
+    ->name('platform.elective-subject.create');
 
 Route::screen('/students/google-sheet',StudentSheetListScreen::class)
     ->name('platform.students.google-sheet');
 
 //ElectiveSubject
-Route::screen('/select-subject',StudentSpecialtyListScreen::class)
-    ->name('platform.select-subject');
+Route::screen('/specialty',UserSpecialtyListScreen::class)
+    ->name('platform.specialty');
+
+Route::screen('/specialty/{id}',ElectiveSubjectPostListScreen::class)
+    ->name('platform.specialty.elective-subject-posts');
+
+Route::screen('/specialty/{id}/{postId}/select-subject', ElectiveSubjectListScreen::class)
+    ->name('platform.specialty.elective-subject-posts.elective-subject');
 
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)

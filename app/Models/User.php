@@ -72,8 +72,8 @@ class User extends Authenticatable
         return $this->belongsToMany(ElectiveSubject::class, 'elective_subject_user');
     }
 
-    public function specialty()
+    public function specialties()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(UserSpecialty::class);
     }
 }
