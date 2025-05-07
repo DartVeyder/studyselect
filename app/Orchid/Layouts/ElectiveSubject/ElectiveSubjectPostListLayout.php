@@ -44,8 +44,8 @@ class ElectiveSubjectPostListLayout extends Table
                     ->route('platform.specialty.elective-subject-posts.elective-subject', ['id' =>$id,'postId' => $post->id]);
 
             }),
-            TD::make('active','Active'),
-            TD::make('created_at','Date of publication'),
+            TD::make('active',__('Active')),
+            TD::make('created_at',__('Date of publication')),
             TD::make(__('Actions'))
                 ->align(TD::ALIGN_CENTER)
                 ->width('100px')
@@ -56,6 +56,9 @@ class ElectiveSubjectPostListLayout extends Table
                         Link::make(__('Edit'))
                             ->route('platform.specialty.elective-subject-posts.elective-subject.edit', ['id' => Request::route('id'),'postId' => $post->id])
                             ->icon('bs.pencil'),
+                        Link::make(__('View'))
+                            ->route('platform.specialty.elective-subject-posts.elective-subject.view', ['id' => Request::route('id'),'postId' => $post->id])
+                            ->icon('bs.eye'),
                     ])),
         ];
     }

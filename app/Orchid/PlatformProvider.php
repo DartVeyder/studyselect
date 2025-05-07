@@ -35,46 +35,50 @@ class PlatformProvider extends OrchidServiceProvider
     {
         return [
             Menu::make("Студенти")
+                ->permission('platform.systems.users')
                 ->list([
                     Menu::make('Переглянути в google таблиці')
-                        ->route('platform.students.google-sheet')
+                        ->route('platform.students.google-sheet'),
+                    Menu::make('Переглянути спеціальності студентів')
+                        ->route('platform.students.specialties')
                 ]),
             Menu::make('Вибір дисциплін (здобувач)')
                 ->route('platform.specialty'),
             Menu::make('Створити запис для вибору вибіркових дисциплін')
+                ->permission('platform.systems.users')
                 ->route('platform.elective-subject.create'),
 
-            Menu::make('Get Started')
-                ->icon('bs.book')
-                ->title('Navigation')
-                ->route(config('platform.index')),
-
-            Menu::make('Sample Screen')
-                ->icon('bs.collection')
-                ->route('platform.example')
-                ->badge(fn () => 6),
-
-            Menu::make('Form Elements')
-                ->icon('bs.card-list')
-                ->route('platform.example.fields')
-                ->active('*/examples/form/*'),
-
-            Menu::make('Overview Layouts')
-                ->icon('bs.window-sidebar')
-                ->route('platform.example.layouts'),
-
-            Menu::make('Grid System')
-                ->icon('bs.columns-gap')
-                ->route('platform.example.grid'),
-
-            Menu::make('Charts')
-                ->icon('bs.bar-chart')
-                ->route('platform.example.charts'),
-
-            Menu::make('Cards')
-                ->icon('bs.card-text')
-                ->route('platform.example.cards')
-                ->divider(),
+//            Menu::make('Get Started')
+//                ->icon('bs.book')
+//                ->title('Navigation')
+//                ->route(config('platform.index')),
+//
+//            Menu::make('Sample Screen')
+//                ->icon('bs.collection')
+//                ->route('platform.example')
+//                ->badge(fn () => 6),
+//
+//            Menu::make('Form Elements')
+//                ->icon('bs.card-list')
+//                ->route('platform.example.fields')
+//                ->active('*/examples/form/*'),
+//
+//            Menu::make('Overview Layouts')
+//                ->icon('bs.window-sidebar')
+//                ->route('platform.example.layouts'),
+//
+//            Menu::make('Grid System')
+//                ->icon('bs.columns-gap')
+//                ->route('platform.example.grid'),
+//
+//            Menu::make('Charts')
+//                ->icon('bs.bar-chart')
+//                ->route('platform.example.charts'),
+//
+//            Menu::make('Cards')
+//                ->icon('bs.card-text')
+//                ->route('platform.example.cards')
+//                ->divider(),
 
             Menu::make(__('Users'))
                 ->icon('bs.people')

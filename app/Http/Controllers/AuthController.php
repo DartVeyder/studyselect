@@ -11,18 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use function MongoDB\BSON\toJSON;
 
 class AuthController extends Controller
 {
     public function redirectToGoogle()
     {
-        return Socialite::driver('google')->scopes([
-            'openid',
-            'https://www.googleapis.com/auth/userinfo.email',
-            'https://www.googleapis.com/auth/userinfo.profile',
-            'https://www.googleapis.com/auth/user.birthday.read',
-            'https://www.googleapis.com/auth/user.phonenumbers.read',
-        ])->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function handleGoogleCallback()
@@ -33,17 +28,21 @@ class AuthController extends Controller
             return redirect('/login');
         }
 
-        // Перевірка, чи користувач має email з домену dspu.edu.ua
-        if (!str_ends_with($socialiteUser->getEmail(), '@dspu.edu.ua')) {
-            return redirect('/login')->withErrors([
-                'email' => 'Увійти можуть лише користувачі з корпоративної електронної адреси dspu.edu.ua.'
-            ]);
-        }
-
-        $user = User::where([
+        $user = User::with('roles')->where([
             'provider' => 'google',
             'provider_id' => $socialiteUser->getId()
         ])->first();
+
+        if (!$user ||  !$user->roles->contains('slug', 'administrator')) {
+            // Перевірка, чи користувач має email з домену dspu.edu.ua
+            if (!str_ends_with($socialiteUser->getEmail(), '@dspu.edu.ua')) {
+                return redirect('/login')->withErrors([
+                    'email' => 'Увійти можуть лише користувачі з корпоративної електронної адреси dspu.edu.ua.'
+                ]);
+            }
+
+        }
+
 
         if (!$user) {
             $validator = Validator::make(
@@ -63,11 +62,12 @@ class AuthController extends Controller
             $user->provider_id = $socialiteUser->getId();
             $user->permissions = [
                 "platform.index" => true,
-                "platform.systems.roles" => true,
-                "platform.systems.users" => true,
-                "platform.systems.attachment" => true,
+                "platform.systems.roles" => false,
+                "platform.systems.users" => false,
+                "platform.systems.attachment" => false,
             ];
             $user->save();
+            $user->replaceRoles( [0 =>2]);
 
         }
          if( $user->id){
@@ -88,6 +88,6 @@ class AuthController extends Controller
 
 
         Auth::login($user);
-        return redirect('/');
+        return redirect()->route('platform.specialty');
     }
 }

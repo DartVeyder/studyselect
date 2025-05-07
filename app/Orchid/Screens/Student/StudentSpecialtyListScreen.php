@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Screens\Student;
 
+use App\Models\UserSpecialty;
 use App\Orchid\Layouts\Student\StudentSpecialtyListLayout;
 use Illuminate\Http\Request;
 use Orchid\Screen\Screen;
@@ -13,12 +14,12 @@ class StudentSpecialtyListScreen extends Screen
      *
      * @return array
      */
-    public function query(Request $request): iterable
+    public function query(): iterable
     {
-        $user = $request->user()->load('specialty');
+
 
         return [
-            'student_specialties' => $user->specialty
+            'student_specialties' => UserSpecialty::all()
         ];
     }
 
@@ -29,7 +30,7 @@ class StudentSpecialtyListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Оберіть спеціальність';
+        return 'Спеціальності студентів';
     }
 
     /**

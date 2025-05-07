@@ -26,11 +26,7 @@ class StudentSpecialtyListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('full_name', 'Здобувач')
-                ->render(function ($student_specialties) {
-                return Link::make($student_specialties->full_name)
-                    ->route('platform.elective-subject', $student_specialties->id);
-            }),
+            TD::make('full_name', 'Здобувач'),
             TD::make('specialty', 'Спеціальність'),
             TD::make('group', 'Група'),
             TD::make('course', 'Курс'),

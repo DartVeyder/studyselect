@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectEditScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectSpecialityEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostListScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectSpecialtyViewScreen;
 use App\Orchid\Screens\ElectiveSubject\SelectSubjectListScreen;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
@@ -41,7 +42,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', ElectiveSubjectListScreen::class)
+Route::screen('/main', UserSpecialtyListScreen::class)
     ->name('platform.main');
 
 //ElectiveSubject
@@ -55,6 +56,9 @@ Route::screen('/elective-subject/create', ElectiveSubjectPostEditScreen::class)
 Route::screen('/students/google-sheet',StudentSheetListScreen::class)
     ->name('platform.students.google-sheet');
 
+Route::screen('/students/specialties',StudentSpecialtyListScreen::class)
+    ->name('platform.students.specialties');
+
 //ElectiveSubject
 Route::screen('/specialty',UserSpecialtyListScreen::class)
     ->name('platform.specialty');
@@ -65,8 +69,11 @@ Route::screen('/specialty/{id}',ElectiveSubjectPostListScreen::class)
 Route::screen('/specialty/{id}/{postId}/select-subject', ElectiveSubjectListScreen::class)
     ->name('platform.specialty.elective-subject-posts.elective-subject');
 
-Route::screen('/specialty/{id}/{postId}/edit-subject', ElectiveSubjectEditScreen::class)
+Route::screen('/specialty/{id}/{postId}/edit-subject', ElectiveSubjectSpecialityEditScreen::class)
     ->name('platform.specialty.elective-subject-posts.elective-subject.edit');
+
+Route::screen('/specialty/{id}/{postId}/view-subject', ElectiveSubjectSpecialtyViewScreen::class)
+    ->name('platform.specialty.elective-subject-posts.elective-subject.view');
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')

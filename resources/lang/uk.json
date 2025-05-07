@@ -97,5 +97,16 @@
     "Upload file": "Завантажити файл",
     "Media catalog": "Медіа каталог",
     "Configure columns": "Налаштувати колонки",
-    "ElectiveSubjectListScreen": "Список вибіркових предметів"
+    "ElectiveSubjectListScreen": "Список вибіркових предметів",
+    "View": "Перегляд",
+    "Actions": "Дії",
+    "Active": "Активний",
+    "Date of publication": "Дата публікації",
+    "My Account": "Мій обліковий запис",
+    "Update your account details such as name, email address and password": "Оновіть дані свого облікового запису, такі як ім'я, адресу електронної пошти та пароль",
+    "Profile Information": "Інформація про профіль",
+    "Update your account's profile information and email address.": "Оновіть інформацію профілю та адресу електронної пошти вашого облікового запису.",
+    "Profile": "Профіль",
+    "Home" : "Головна",
+    "Title" : "Заголовок"
 }
