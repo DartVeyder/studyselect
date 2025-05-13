@@ -89,7 +89,7 @@ class ElectiveSubjectPostEditScreen extends Screen
 
         Toast::info('Ви успішно створили публікацію.');
 
-        return redirect()->back();
+        return redirect()->route('platform.elective-subject-post');
     }
 
 }

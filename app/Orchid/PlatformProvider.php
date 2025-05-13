@@ -44,9 +44,12 @@ class PlatformProvider extends OrchidServiceProvider
                 ]),
             Menu::make('Вибір дисциплін (здобувач)')
                 ->route('platform.specialty'),
-            Menu::make('Створити запис для вибору вибіркових дисциплін')
+            Menu::make('Список записів про вибір вибіркових дисциплін')
                 ->permission('platform.systems.users')
-                ->route('platform.elective-subject.create'),
+                ->route('platform.elective-subject-post'),
+            Menu::make('Список  дисциплін')
+                ->permission('platform.systems.users')
+                ->route('platform.elective-subject'),
 
 //            Menu::make('Get Started')
 //                ->icon('bs.book')

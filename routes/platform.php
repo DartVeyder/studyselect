@@ -2,6 +2,10 @@
 
 declare(strict_types=1);
 
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectEditScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListAdminScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostListAdminScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostViewSelectedAdminScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectSpecialityEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
@@ -46,12 +50,19 @@ Route::screen('/main', UserSpecialtyListScreen::class)
     ->name('platform.main');
 
 //ElectiveSubject
-//Route::screen('/elective-subject/', ElectiveSubjectListScreen::class)
-//    ->name('platform.elective-subject');
-
-//ElectiveSubject > created
-Route::screen('/elective-subject/create', ElectiveSubjectPostEditScreen::class)
+Route::screen('/elective-subject', ElectiveSubjectListAdminScreen::class)
+    ->name('platform.elective-subject');
+Route::screen('/elective-subject/create', ElectiveSubjectEditScreen::class)
     ->name('platform.elective-subject.create');
+//ElectiveSubject > created
+Route::screen('/elective-subject-post/create', ElectiveSubjectPostEditScreen::class)
+    ->name('platform.elective-subject-post.create');
+
+Route::screen('/elective-subject-post/{post}', ElectiveSubjectPostViewSelectedAdminScreen::class)
+    ->name('platform.elective-subject-post.view-selected');
+
+Route::screen('/elective-subject-post', ElectiveSubjectPostListAdminScreen::class)
+    ->name('platform.elective-subject-post');
 
 Route::screen('/students/google-sheet',StudentSheetListScreen::class)
     ->name('platform.students.google-sheet');
