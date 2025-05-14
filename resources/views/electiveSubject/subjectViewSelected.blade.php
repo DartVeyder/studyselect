@@ -17,7 +17,9 @@
                      $row->priority_3 + $row->priority_4 + $row->priority_5;
         @endphp
         <tr>
-            <td>{{ $row->subject_name }}</td>
+            <td> <a href="{{ url('/elective-subject-post/' . $postId . '/' . $row->elective_subject_id) }}">
+                    {{ $row->subject_name }}
+                </a></td>
             <td>{{ $row->priority_0 }}</td>
             <td>{{ $row->priority_1 }}</td>
             <td>{{ $row->priority_2 }}</td>

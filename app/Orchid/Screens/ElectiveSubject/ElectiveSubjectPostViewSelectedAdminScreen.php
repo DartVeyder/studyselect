@@ -38,7 +38,8 @@ class ElectiveSubjectPostViewSelectedAdminScreen extends Screen
             ->orderBy('s.name')
             ->get();
         return [
-            'subjects' =>$subjects
+            'subjects' =>$subjects,
+            'postId' => $post->id,
         ];
     }
 

@@ -6,6 +6,7 @@ use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListAdminScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostListAdminScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostViewSelectedAdminScreen;
+use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostViewSelectedSubjectAdminScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectSpecialityEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectPostEditScreen;
 use App\Orchid\Screens\ElectiveSubject\ElectiveSubjectListScreen;
@@ -61,6 +62,9 @@ Route::screen('/elective-subject-post/create', ElectiveSubjectPostEditScreen::cl
 Route::screen('/elective-subject-post/{post}', ElectiveSubjectPostViewSelectedAdminScreen::class)
     ->name('platform.elective-subject-post.view-selected');
 
+Route::screen('/elective-subject-post/{post}/{subject}', ElectiveSubjectPostViewSelectedSubjectAdminScreen::class)
+    ->name('platform.elective-subject-post.view-selected.subject');
+
 Route::screen('/elective-subject-post', ElectiveSubjectPostListAdminScreen::class)
     ->name('platform.elective-subject-post');
 
@@ -85,6 +89,7 @@ Route::screen('/specialty/{id}/{postId}/edit-subject', ElectiveSubjectSpeciality
 
 Route::screen('/specialty/{id}/{postId}/view-subject', ElectiveSubjectSpecialtyViewScreen::class)
     ->name('platform.specialty.elective-subject-posts.elective-subject.view');
+
 // Platform > Profile
 Route::screen('profile', UserProfileScreen::class)
     ->name('platform.profile')
